@@ -1,0 +1,88 @@
+﻿@model PaginatedList<EvidencePractise_final1.Models.Employee>
+@{
+    ViewData["Title"] = "Index";
+    int cp = Model.PageIndex;
+    int tp = Model.TotalPage;
+    var next = Model.HasNextPage ? "" : "disabled";
+    var prev = Model.HasPreviousPage ? "" : "disabled";
+    int i = (cp - 1) * ViewBag.pSize + 1;
+
+
+}
+<div class="row">
+    <div class="col-8">
+        <h1 class="display-5"> Employee Index</h1>
+
+    </div>
+    <div class="col-4">
+        <form asp-controller="Employee" asp-action="Index" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control form-control-sm " name="userText" placeholder="Search here...." />
+                <button class="btn btn-outline-info" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    @if(ViewBag.count != null)
+    {
+        <h6> Total @ViewBag.count data found !!</h6>
+    }
+</div>
+<div class="d-flex justify-content-end mb-3 ">
+    <a class="btn btn-outline-primary " asp-action="Create">Add New Employee</a>
+</div>
+@foreach (var item in Model)
+{
+    <div class="card mt-2 ">
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                <img src="@item.Image" width="32" />
+                <b> <a asp-action="Index" asp-route-sortOrder="@ViewBag.sName" asp-route-userText="@ViewBag.sWord">Employee Name</a> </b>@Html.DisplayFor(x=>item.EmploeeName)
+                <b> Join Date : </b>@Html.DisplayFor(x=>item.Joindate)
+                <b> Active Status : </b>@Html.DisplayFor(x=>item.ActiveStatus)
+            </div>
+            <div>
+                <a asp-action="Edit" asp-controller="Employee" asp-route-id="@item.EmployeeId" class="btn btn-outline-success">Edit</a>
+                <a asp-action="Delete" asp-controller="Employee" asp-route-id="@item.EmployeeId" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+        <div class="card-body">
+            @foreach (var it in item.EmployeeSkills)
+            {
+                <ul>
+                    <li>@Html.DisplayFor(x=>it.Skill.SkillName)</li>
+                </ul>
+            }
+        </div>
+    </div>
+}
+<ul class="pagination d-flex justify-content-end mt-2">
+    
+    <li class="page-item me-1 @prev">
+        <a asp-action="Index"  asp-route-page="@(cp-1)" class="btn btn-info btn-sm @prev" >Previous</a>
+        </li>
+    @for (int k = 1; k < Model.TotalPage; k++)
+    {
+        if (k >= cp - 5 && k <= cp + 5)
+        {
+            if (k == cp)
+            {
+                <li class="page-item @(k==cp?"active" : "")">
+                    <a asp-action="Index" asp-route-page="@k" class="btn btn-warning btn-sm">@k</a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item @(k==cp?"active" : "")">
+                    <a asp-action="Index" asp-route-page="@k" class="btn btn-success btn-sm">@k</a>
+                </li>
+            }
+
+        }
+    }
+    <li class="page-item ms-1 @next">
+        <a asp-action="Index"  asp-route-page="@(cp + 1)" class="btn btn-info btn-sm @next" >Next</a>
+        </li>
+    
+</ul>

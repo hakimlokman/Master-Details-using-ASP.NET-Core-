@@ -1,0 +1,66 @@
+﻿@model EvidencePractise_final1.Models.EmployeeVM
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+    <div class="row">
+        <div class="col-6">
+            <h2>Add  New Employee</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <label asp-for="EmploeeName" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <input asp-for="EmploeeName" class="form-control form-control-sm"/>
+                </div>
+                <div class="col-3">
+                    <span asp-validation-for="EmploeeName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <label asp-for="Joindate" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <input asp-for="Joindate" class="form-control form-control-sm" type="date"/>
+                </div>
+                <div class="col-3">
+                    <span asp-validation-for="Joindate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <label asp-for="ImageFile" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <input asp-for="ImageFile" class="form-control form-control-sm" />
+                </div>
+                <div class="col-3">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <label asp-for="ActiveStatus" class="col-form-label col-3"></label>
+                <div class="col-7">
+                    <span class="form-check-label">
+                        @Html.CheckBoxFor(x=>x.ActiveStatus)
+                    </span>
+                </div>
+                <div class="col-3">
+                    <span asp-validation-for="ActiveStatus" class="text-danger"></span>
+                </div>
+            </div>          
+        </div>
+        <div class="col-6">
+            <h2>Add Skill</h2>
+            <div class="d-flex justify-content-end mb-2">
+                <a id="btnAdd" class="btn btn-primary btn-sm">Add</a>
+            </div>
+            <div id="container">
+                <script>
+                    LoadData();
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary" >Save</button>
+    </div>
+</form>
+
